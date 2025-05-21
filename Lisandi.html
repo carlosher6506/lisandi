@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Lisandi - Galería Emocional</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Center the video button and style it */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: clamp(10px, 2vw, 20px);
+            padding: clamp(0.5rem, 2vw, 1rem);
+            max-width: min(1200px, 95vw);
+            margin: 0 auto;
+        }
+
+        .video-button {
+            grid-column: 1 / -1;
+            /* Span the full width of the grid */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: clamp(1rem, 2vw, 2rem) auto 0;
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            background: linear-gradient(90deg, var(--blue), var(--pink), var(--wine));
+            color: white;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+        }
+
+        .video-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, var(--dark-blue), var(--dark-pink), var(--dark-wine));
+        }
+
+        .video-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for video list modal */
+        .video-list {
+            background: rgba(255, 255, 255, 0.9);
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border-radius: 10px;
+            text-align: center;
+            max-width: min(400px, 90vw);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-list h2 {
+            color: var(--dark-wine);
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .video-option {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            background: linear-gradient(90deg, var(--light-blue), var(--light-pink), var(--light-wine));
+            color: var(--dark-blue);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 500;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .video-option:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(90deg, var(--blue), var(--pink), var(--wine));
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-option:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for video modal */
+        .video-container {
+            width: 100%;
+            max-width: min(800px, 90vw);
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .video-button {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .video-list {
+                padding: 1rem;
+            }
+
+            .video-option {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Para Lisandi</h1>
+        <div class="instructions">
+            <p>Presiona una foto y elije un color dentro de la foto cuando:</p>
+            <ul>
+                <li><span class="color-dot green"></span>Te haga falta fe</li>
+                <li><span class="color-dot blue"></span> Necesites perdonar</li>
+                <li><span class="color-dot red"></span> Estes enojada</li>
+                <li><span class="color-dot black"></span> Estes triste</li>
+                <li><span class="color-dot yellow"></span> Estes preocupada</li>
+                <li><span class="color-dot purple"></span> Estes feliz</li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="gallery">
+        <div class="gallery-item" data-index="0">
+            <img src="./img/001.jpg" alt="Sunset">
+        </div>
+        <div class="gallery-item" data-index="1">
+            <img src="./img/002.jpg" alt="Mountain">
+        </div>
+        <div class="gallery-item" data-index="2">
+            <img src="./img/003.jpg" alt="Ocean">
+        </div>
+        <div class="gallery-item" data-index="3">
+            <img src="./img/004.jpg" alt="Forest">
+        </div>
+        <div class="gallery-item" data-index="4">
+            <img src="./img/005.jpg" alt="Flowers">
+        </div>
+        <div class="gallery-item" data-index="5">
+            <img src="./img/006.jpg" alt="City">
+        </div>
+        <div class="gallery-item" data-index="6">
+            <img src="./img/007.jpg" alt="Desert">
+        </div>
+        <div class="gallery-item" data-index="7">
+            <img src="./img/008.jpg" alt="River">
+        </div>
+        <div class="gallery-item" data-index="8">
+            <img src="./img/009.jpg" alt="Waterfall">
+        </div>
+        <div class="gallery-item" data-index="9">
+            <img src="./img/010.jpg" alt="Butterfly">
+        </div>
+        <div class="gallery-item" data-index="10">
+            <img src="./img/011.jpg" alt="Meadow">
+        </div>
+        <div class="gallery-item" data-index="11">
+            <img src="./img/012.jpg" alt="Sky">
+        </div>
+        <button class="video-button">Ver videos</button>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <span class="close-button">×</span>
+        <img id="modalImage" src="" alt="Modal Image">
+        <div class="color-bands">
+            <div class="color-band green">
+                <div class="message"></div>
+            </div>
+            <div class="color-band blue">
+                <div class="message"></div>
+            </div>
+            <div class="color-band red">
+                <div class="message"></div>
+            </div>
+            <div class="color-band black">
+                <div class="message"></div>
+            </div>
+            <div class="color-band yellow">
+                <div class="message"></div>
+            </div>
+            <div class="color-band purple">
+                <div class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="videoListModal">
+        <span class="close-button">×</span>
+        <div class="video-list">
+            <h2>Elige un video</h2>
+            <button class="video-option" data-video="./media/001.mp4">Video 1</button>
+            <button class="video-option" data-video="./media/002.mp4">Video 2</button>
+            <button class="video-option" data-video="./media/003.mp4">Video 3 - New</button>
+        </div>
+    </div>
+
+    <div class="modal" id="videoModal">
+        <span class="close-button">×</span>
+        <div class="video-container">
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const videoListModal = document.getElementById('videoListModal');
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        const videoButton = document.querySelector('.video-button');
+        const videoOptions = document.querySelectorAll('.video-option');
+
+        // Verses data structure
+        const verses = {
+            green: [
+                { text: "Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve.", ref: "Hebreos 11:1" },
+                { text: "Jesús les dijo: Por vuestra poca fe; porque de cierto os digo, que si tuviereis fe como un grano de mostaza, diréis a este monte: Pásate de aquí allá, y se pasará; y nada os será imposible.", ref: "Mateo 17:20" },
+                { text: "Jesús le dijo: Si puedes creer, al que cree todo le es posible.", ref: "Marcos 9:23" },
+                { text: "Así que la fe es por el oír, y el oír, por la palabra de Dios.", ref: "Romanos 10:17" },
+                { text: "Porque por fe andamos, no por vista.", ref: "2 Corintios 5:7" },
+                { text: "Jesús le dijo: ¿No te he dicho que si crees, verás la gloria de Dios?", ref: "Juan 11:40" },
+                { text: "Hubiera yo desmayado, si no creyese que veré la bondad de Jehová en la tierra de los vivientes. Aguarda a Jehová; esfuérzate, y aliéntese tu corazón; sí, espera a Jehová.", ref: "Salmo 27:13-14" },
+                { text: "Pero pida con fe, no dudando nada; porque el que duda es semejante a la onda del mar, que es arrastrada por el viento y echada de una parte a otra.", ref: "Santiago 1:6" },
+                { text: "Pero los que esperan a Jehová tendrán nuevas fuerzas; levantarán alas como las águilas; correrán, y no se cansarán; caminarán, y no se fatigarán.", ref: "Isaías 40:31" },
+                { text: "Por tanto, os digo que todo lo que pidiereis orando, creed que lo recibiréis, y os vendrá.", ref: "Marcos 11:24" },
+                { text: "Jesús le dijo: Porque me has visto, Tomás, creíste; bienaventurados los que no vieron, y creyeron.", ref: "Juan 20:29" },
+                { text: "Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí; y lo que ahora vivo en la carne, lo vivo en la fe del Hijo de Dios, el cual me amó y se entregó a sí mismo por mí.", ref: "Gálatas 2:20" }
+            ],
+            red: [
+                { text: "Airaos, pero no pequéis; no se ponga el sol sobre vuestro enojo, ni deis lugar al diablo.", ref: "Efesios 4:26-27" },
+                { text: "La blanda respuesta quita la ira; mas la palabra áspera hace subir el furor.", ref: "Proverbios 15:1" },
+                { text: "Por esto, mis amados hermanos, todo hombre sea pronto para oír, tardo para hablar, tardo para airarse; porque la ira del hombre no obra la justicia de Dios.", ref: "Santiago 1:19-20" },
+                { text: "El necio da rienda suelta a toda su ira, mas el sabio al fin la sosiega.", ref: "Proverbios 29:11" },
+                { text: "No te apresures en tu espíritu a enojarte; porque el enojo reposa en el seno de los necios.", ref: "Eclesiastés 7:9" },
+                { text: "El que tarda en airarse es grande de entendimiento; mas el que es impaciente de espíritu enaltece la necedad.", ref: "Proverbios 14:29" },
+                { text: "Deja la ira, y desecha el enojo; no te excites en manera alguna a hacer lo malo.", ref: "Salmo 37:8" },
+                { text: "Pero yo os digo que cualquiera que se enoje contra su hermano, será culpable de juicio...", ref: "Mateo 5:22" },
+                { text: "No os venguéis vosotros mismos, amados míos, sino dejad lugar a la ira de Dios...", ref: "Romanos 12:19" },
+                { text: "Pero ahora dejad también vosotros todas estas cosas: ira, enojo, malicia, blasfemia, palabras deshonestas de vuestra boca.", ref: "Colosenses 3:8" },
+                { text: "Mejor es el que tarda en airarse que el fuerte; y el que se enseñorea de su espíritu, que el que toma una ciudad.", ref: "Proverbios 16:32" },
+                { text: "Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe, mansedumbre, templanza; contra tales cosas no hay ley.", ref: "Gálatas 5:22-23" }
+            ],
+            yellow: [
+                { text: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias. Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.", ref: "Filipenses 4:6-7" },
+                { text: "Por tanto os digo: No os afanéis por vuestra vida, qué habéis de comer o qué habéis de beber...", ref: "Mateo 6:25-27" },
+                { text: "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.", ref: "1 Pedro 5:7" },
+                { text: "Tú guardarás en completa paz a aquel cuyo pensamiento en ti persevera; porque en ti ha confiado.", ref: "Isaías 26:3" },
+                { text: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da. No se turbe vuestro corazón, ni tenga miedo.", ref: "Juan 14:27" },
+                { text: "Echa sobre Jehová tu carga, y él te sustentará; no dejará para siempre caído al justo.", ref: "Salmo 55:22" },
+                { text: "Busqué a Jehová, y él me oyó, y me libró de todos mis temores.", ref: "Salmo 34:4" },
+                { text: "Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia...", ref: "Proverbios 3:5-6" },
+                { text: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar...", ref: "Mateo 11:28-30" },
+                { text: "No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo...", ref: "Isaías 41:10" },
+                { text: "Dios es nuestro amparo y fortaleza, nuestro pronto auxilio en las tribulaciones...", ref: "Salmo 46:1-2" },
+                { text: "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes...", ref: "Josué 1:9" }
+            ],
+            blue: [
+                { text: "Quítense de vosotros toda amargura, enojo, ira, gritería y maledicencia, y toda malicia...", ref: "Efesios 4:31-32" },
+                { text: "Soportándoos unos a otros, y perdonándoos unos a otros si alguno tuviere queja contra otro...", ref: "Colosenses 3:13" },
+                { text: "Porque si perdonáis a los hombres sus ofensas, os perdonará también a vosotros vuestro Padre celestial...", ref: "Mateo 6:14-15" },
+                { text: "No juzguéis, y no seréis juzgados; no condenéis, y no seréis condenados; perdonad, y seréis perdonados.", ref: "Lucas 6:37" },
+                { text: "Entonces se le acercó Pedro y le dijo: Señor, ¿cuántas veces perdonaré a mi hermano que peque contra mí?...", ref: "Mateo 18:21-22" },
+                { text: "No os venguéis vosotros mismos, amados míos, sino dejad lugar a la ira de Dios...", ref: "Romanos 12:19-21" },
+                { text: "Y cuando estéis orando, perdonad, si tenéis algo contra alguno...", ref: "Marcos 11:25" },
+                { text: "El que cubre la falta busca amistad; mas el que la divulga, aparta al amigo.", ref: "Proverbios 17:9" },
+                { text: "No ha hecho con nosotros conforme a nuestras iniquidades, ni nos ha pagado conforme a nuestros pecados...", ref: "Salmo 103:10-12" },
+                { text: "Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados...", ref: "1 Juan 1:9" },
+                { text: "Y al que vosotros perdonáis, yo también; porque también yo lo he perdonado...", ref: "2 Corintios 2:10-11" },
+                { text: "¿Qué Dios como tú, que perdona la maldad, y olvida el pecado del remanente de su heredad?...", ref: "Miqueas 7:18-19" }
+            ],
+            black: [
+                { text: "Bienaventurados los que lloran, porque ellos recibirán consolación.", ref: "Mateo 5:4" },
+                { text: "También vosotros ahora tenéis tristeza; pero os volveré a ver, y se gozará vuestro corazón, y nadie os quitará vuestro gozo.", ref: "Juan 16:22" },
+                { text: "Porque un momento será su ira, pero su favor dura toda la vida. Por la noche durará el lloro, y a la mañana vendrá la alegría.", ref: "Salmo 30:5" },
+                { text: "No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo; siempre te ayudaré, siempre te sustentaré con la diestra de mi justicia.", ref: "Isaías 41:10" },
+                { text: "Bendito sea el Dios y Padre de nuestro Señor Jesucristo, Padre de misericordias y Dios de toda consolación, el cual nos consuela en todas nuestras tribulaciones...", ref: "2 Corintios 1:3-4" },
+                { text: "Enjugará Dios toda lágrima de los ojos de ellos; y ya no habrá muerte, ni habrá más llanto, ni clamor, ni dolor...", ref: "Apocalipsis 21:4" },
+                { text: "¿Por qué te abates, oh alma mía, y por qué te turbas dentro de mí? Espera en Dios; porque aún he de alabarle, salvación mía y Dios mío.", ref: "Salmo 42:11" },
+                { text: "Pues tengo por cierto que las aflicciones del tiempo presente no son comparables con la gloria venidera que en nosotros ha de manifestarse.", ref: "Romanos 8:18" },
+                { text: "...Convertiré su lloro en gozo, y los consolaré, y los alegraré de su dolor.", ref: "Jeremías 31:13" },
+                { text: "Cercano está Jehová a los quebrantados de corazón; y salva a los contritos de espíritu.", ref: "Salmo 34:18" }
+            ],
+            purple: [
+                { text: "Este es el día que hizo Jehová; nos gozaremos y alegraremos en él.", ref: "Salmo 118:24" },
+                { text: "Regocijaos en el Señor siempre. Otra vez digo: ¡Regocijaos!", ref: "Filipenses 4:4" },
+                { text: "Entonces nuestra boca se llenará de risa, y nuestra lengua de alabanza; Entonces dirán entre las naciones: Grandes cosas ha hecho Jehová con éstos. Grandes cosas ha hecho Jehová con nosotros; estaremos alegres.", ref: "Salmo 126:2-3" },
+                { text: "Gozaos con los que se gozan; llorad con los que lloran.", ref: "Romanos 12:15" },
+                { text: "El corazón alegre constituye buen remedio; mas el espíritu triste seca los huesos.", ref: "Proverbios 17:22" },
+                { text: "Y mi espíritu se regocija en Dios mi Salvador.", ref: "Lucas 1:47" },
+                { text: "Cantad alegres a Dios, habitantes de toda la tierra. Servid a Jehová con alegría; venid ante su presencia con regocijo.", ref: "Salmo 100:1-2" },
+                { text: "En gran manera me gozaré en Jehová, mi alma se alegrará en mi Dios...", ref: "Isaías 61:10" },
+                { text: "Jehová está en medio de ti, poderoso, él salvará; se gozará sobre ti con alegría, callará de amor, se regocijará sobre ti con cánticos.", ref: "Sofonías 3:17" },
+                { text: "Me mostrarás la senda de la vida; en tu presencia hay plenitud de gozo...", ref: "Salmo 16:11" },
+                { text: "Estad siempre gozosos. Orad sin cesar. Dad gracias en todo, porque esta es la voluntad de Dios para con vosotros en Cristo Jesús.", ref: "1 Tesalonicenses 5:16-18" },
+                { text: "No os entristezcáis, porque el gozo de Jehová es vuestra fuerza.", ref: "Nehemías 8:10" }
+            ]
+        };
+
+        // Verse indices for each photo and color
+        const verseIndices = {
+            0: { green: 0, blue: 0, red: 0, black: 0, yellow: 0, purple: 0 },
+            1: { green: 1, blue: 1, red: 1, black: 1, yellow: 1, purple: 1 },
+            2: { green: 2, blue: 2, red: 2, black: 2, yellow: 2, purple: 2 },
+            3: { green: 3, blue: 3, red: 3, black: 3, yellow: 3, purple: 3 },
+            4: { green: 4, blue: 4, red: 4, black: 4, yellow: 4, purple: 4 },
+            5: { green: 5, blue: 5, red: 5, black: 5, yellow: 5, purple: 5 },
+            6: { green: 6, blue: 6, red: 6, black: 6, yellow: 6, purple: 6 },
+            7: { green: 7, blue: 7, red: 7, black: 7, yellow: 7, purple: 7 },
+            8: { green: 8, blue: 8, red: 8, black: 0, yellow: 8, purple: 8 },
+            9: { green: 9, blue: 9, red: 9, black: 1, yellow: 9, purple: 9 },
+            10: { green: 10, blue: 10, red: 10, black: 2, yellow: 10, purple: 10 },
+            11: { green: 11, blue: 11, red: 11, black: 3, yellow: 11, purple: 11 }
+        };
+
+        // Track the current photo index
+        let currentPhotoIndex = 0;
+
+        // Open image modal
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                currentPhotoIndex = parseInt(item.getAttribute('data-index'));
+                modalImg.src = imgSrc;
+                modal.classList.add('active');
+                // Reset all color bands
+                document.querySelectorAll('.color-band').forEach(band => {
+                    band.classList.remove('active');
+                    const messageElement = band.querySelector('.message');
+                    messageElement.textContent = '';
+                });
+            });
+        });
+
+        // Open video list modal
+        videoButton.addEventListener('click', () => {
+            videoListModal.classList.add('active');
+        });
+
+        // Open video modal when a video option is clicked
+        videoOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const videoUrl = option.getAttribute('data-video');
+                videoFrame.src = videoUrl;
+                videoListModal.classList.remove('active');
+                videoModal.classList.add('active');
+            });
+        });
+
+        // Close modals
+        document.querySelectorAll('.close-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (modal.classList.contains('active')) modal.classList.remove('active');
+                if (videoListModal.classList.contains('active')) videoListModal.classList.remove('active');
+                if (videoModal.classList.contains('active')) {
+                    videoModal.classList.remove('active');
+                    videoFrame.src = ''; // Stop the video by clearing the src
+                }
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+            if (e.target === videoListModal) videoListModal.classList.remove('active');
+            if (e.target === videoModal) {
+                videoModal.classList.remove('active');
+                videoFrame.src = ''; // Stop the video
+            }
+        });
+
+        // Handle color band clicks
+        document.querySelectorAll('.color-band').forEach(band => {
+            band.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const color = band.className.split(' ')[1];
+                // Remove active class from all other bands
+                document.querySelectorAll('.color-band').forEach(b => {
+                    if (b !== band) b.classList.remove('active');
+                });
+                band.classList.toggle('active');
+                const messageElement = band.querySelector('.message');
+                if (band.classList.contains('active')) {
+                    const verseIndex = verseIndices[currentPhotoIndex][color];
+                    const verse = verses[color][verseIndex];
+                    messageElement.textContent = `${verse.text} (${verse.ref})`;
+                } else {
+                    messageElement.textContent = '';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
